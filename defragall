@@ -35,16 +35,16 @@ get_subvol() {
 }
 
 defragall() {
-  local tmpfile="/var/log/${NAME}.log"
-  echo -e "\e[1;33mReport file: ${tmpfile}\e[0;m"
+  local logfile="/var/log/${NAME}.log"
+  echo -e "\e[1;33mLog file: ${logfile}\e[0;m"
   echo -e '\e[1;33mStarting the defragmentation process...\e[0;m'
 
   local qr
   read -p 'Do you want to continue? [N/y] ' qr
   if [[ $qr =~ [yY] ]]; then
-    date > $tmpfile
+    date > $logfile
     for i in $subvolumespath; do
-      btrfs filesystem defragment $args $i 2>> $tmpfile &
+      btrfs filesystem defragment $args $i 2>> $logfile &
       cmdpid=("$cmdpid $!")
     done
     trap 'quit' 2 3
