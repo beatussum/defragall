@@ -1,0 +1,115 @@
+#!/usr/bin/env bash
+
+
+readonly VERSION=1.0
+readonly NAME=`basename $0`
+
+
+print_version() {
+  echo $VERSION
+}
+
+print_help() {
+  echo "usage: $NAME [-n] [-c <mode>] [-f] [-s <start>] [-l <len>] [-t <size>]"
+  echo
+  echo '    Defragment all mounted btrfs subvolumes.'
+  echo
+  echo '    -h                 : print this message'
+  echo '    -v                 : print the program version'
+  echo '    -n                 : not to be verbose'
+  echo '    -c<zlib,lzo,zstd>  : compress the file while defragmenting'
+  echo '    -f                 : flush data to disk immediately after defragmenting'
+  echo '    -s <start>         : defragment only from byte onward'
+  echo '    -l <len>           : defragment only up to len bytes'
+  echo '    -t <size>          : target extent size hint'
+  echo
+  echo "    see 'btrfs filesystem defragment --help' for more details"
+}
+
+get_subvol() {
+  echo -e '\e[1;33mGetting the list of mounted subvolumes...\e[0;m'
+  subvolumesid=`btrfs subvol list / | cut -d ' ' -f 2`
+  for i in $subvolumesid; do
+    subvolumespath=("$subvolumespath `mount | grep subvolid=$i | cut -d ' ' -f 3`")
+  done
+}
+
+defragall() {
+  local tmpfile="/var/log/${NAME}.log"
+  echo -e "\e[1;33mReport file: ${tmpfile}\e[0;m"
+  echo -e '\e[1;33mStarting the defragmentation process...\e[0;m'
+
+  local qr
+  read -p 'Do you want to continue? [N/y] ' qr
+  if [[ $qr =~ [yY] ]]; then
+    date > $tmpfile
+    for i in $subvolumespath; do
+      btrfs filesystem defragment $args $i 2>> $tmpfile &
+      cmdpid=("$cmdpid $!")
+    done
+    trap 'quit' 2 3
+    wait
+    echo -e '\e[1;33mDefragmentation complete!\e[0;m'
+  fi
+}
+
+quit() {
+  for i in $cmdpid; do
+    if [ -n "`ps -Tr | grep $i`" ]; then
+      kill $i
+    fi
+  done
+  kill -9 $$
+}
+
+
+args='-v -r'
+while getopts 'hvc:nfs:l:t:' OPT; do
+  case $OPT in
+    h)
+      print_help
+      exit 0
+      ;;
+    v)
+      print_version
+      exit 0
+      ;;
+    n)
+      args=`echo $args | sed 's/-v//'`
+      ;;
+    c)
+      if [[ $OPTARG == 'lzo' ]]; then
+        args="$args -clzo"
+      elif [[ $OPTARG == 'zlib' ]] || [ -z $OPTARG ]; then
+        args="$args -czlib"
+      elif [[ $OPTARG == 'zstd' ]]; then
+        args="$args -czstd"
+      else
+        echo "$OPTARG : bad algorithm"
+        exit 3
+      fi
+      ;;
+    f)
+      args="$args -f"
+      ;;
+    s)
+      args="$args -s $OPTARG"
+      ;;
+    l)
+      args="$args -l $OPTARG"
+      ;;
+    t)
+      args="$args -t $OPTARG"
+      ;;
+    *)
+      exit 2
+      ;;
+  esac
+done
+
+if [ `id -u` -ne 0 ]; then
+  echo 'This operation must be executed with root right'
+  exit 1
+fi
+get_subvol
+defragall
