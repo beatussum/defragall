@@ -1,8 +1,19 @@
 #!/usr/bin/env bash
 
 
+source gettext.sh
+
 readonly VERSION=1.0
 readonly NAME=`basename $0`
+
+export TEXTDOMAIN=$NAME
+export TEXTDOMAINDIR="/usr/share/locale"
+
+readonly COLOR_WARN='\e[1;5;91m'
+readonly COLOR_NAME='\e[32m'
+readonly COLOR_END='\e[0m'
+readonly INFO_PREFIX='\e[1;34m::\e[0m'
+readonly ERROR_PREFIX='\e[1;91m::\e[0m'
 
 
 print_version() {
@@ -10,24 +21,24 @@ print_version() {
 }
 
 print_help() {
-  echo "usage: $NAME [-n] [-c <mode>] [-f] [-s <start>] [-l <len>] [-t <size>]"
+  eval_gettext "usage: \$NAME [-n] [-c <mode>] [-f] [-s <start>] [-l <len>] [-t <size>]"; echo
   echo
-  echo '    Defragment all mounted btrfs subvolumes.'
+  gettext "    Defragment all mounted btrfs subvolumes."; echo
   echo
-  echo '    -h                 : print this message'
-  echo '    -v                 : print the program version'
-  echo '    -n                 : not to be verbose'
-  echo '    -c<zlib,lzo,zstd>  : compress the file while defragmenting'
-  echo '    -f                 : flush data to disk immediately after defragmenting'
-  echo '    -s <start>         : defragment only from byte onward'
-  echo '    -l <len>           : defragment only up to len bytes'
-  echo '    -t <size>          : target extent size hint'
+  gettext "    -h                 : print this message"; echo
+  gettext "    -v                 : print the program version"; echo
+  gettext "    -n                 : not to be verbose"; echo
+  gettext "    -c<zlib,lzo,zstd>  : compress the file while defragmenting"; echo
+  gettext "    -f                 : flush data to disk immediately after defragmenting"; echo
+  gettext "    -s <start>         : defragment only from byte onward"; echo
+  gettext "    -l <len>           : defragment only up to 'len' bytes"; echo
+  gettext "    -t <size>          : target extent 'size' hint"; echo
   echo
-  echo "    see 'btrfs filesystem defragment --help' for more details"
+  gettext "    see 'btrfs filesystem defragment --help' for more details"; echo
 }
 
 get_subvol() {
-  echo -e '\e[1;33mGetting the list of mounted subvolumes...\e[0;m'
+  gettext "Getting the list of mounted subvolumes..."; echo
   subvolumesid=`btrfs subvol list / | cut -d ' ' -f 2`
   for i in $subvolumesid; do
     subvolumespath=("$subvolumespath `mount | grep subvolid=$i | cut -d ' ' -f 3`")
@@ -36,12 +47,13 @@ get_subvol() {
 
 defragall() {
   local logfile="/var/log/${NAME}.log"
-  echo -e "\e[1;33mLog file: ${logfile}\e[0;m"
-  echo -e '\e[1;33mStarting the defragmentation process...\e[0;m'
+  echo -e $INFO_PREFIX $(gettext "Log:") "$COLOR_NAME$logfile"
+  echo -e $INFO_PREFIX $(gettext "Starting the defragmentation process...")
 
   local qr
-  read -p 'Do you want to continue? [N/y] ' qr
-  if [[ $qr =~ [yY] ]]; then
+  echo -e -n $COLOR_WARN$(gettext "Do you want to continue? [N/y]") "$COLOR_END"
+  read -n 1 qr; echo
+  if [[ $qr == $(gettext "Y") || $qr == $(gettext "y") ]]; then
     date > $logfile
     for i in $subvolumespath; do
       btrfs filesystem defragment $args $i 2>> $logfile &
@@ -49,7 +61,7 @@ defragall() {
     done
     trap 'quit' 2 3
     wait
-    echo -e '\e[1;33mDefragmentation complete!\e[0;m'
+    echo -e $INFO_PREFIX $(gettext "Defragmentation complete")
   fi
 }
 
@@ -59,7 +71,7 @@ quit() {
       kill $i
     fi
   done
-  kill -9 $$
+  kill $$
 }
 
 
@@ -85,7 +97,7 @@ while getopts 'hvc:nfs:l:t:' OPT; do
       elif [[ $OPTARG == 'zstd' ]]; then
         args="$args -czstd"
       else
-        echo "$OPTARG : bad algorithm"
+        echo -e "$ERROR_PREFIX $COLOR_NAME$OPTARG$COLOR_END" $(gettext "is not a correct algorithm")
         exit 3
       fi
       ;;
@@ -108,7 +120,7 @@ while getopts 'hvc:nfs:l:t:' OPT; do
 done
 
 if [ `id -u` -ne 0 ]; then
-  echo 'This operation must be executed with root right'
+  echo -e $ERROR_PREFIX $(gettext "This operation must be executed with root rights")
   exit 1
 fi
 get_subvol

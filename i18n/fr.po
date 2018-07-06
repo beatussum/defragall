@@ -1,0 +1,99 @@
+# FRENCH TRANSLATION FOR DEFRAGALL
+# Copyright (C) 2018 Mattéo Rossillol--Laruelle
+# This file is distributed under the GNU General Public License, version 3 or later.
+# Mattéo Rossillol--Laruelle <beatussum@protonmail.com>, 2018.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-07-06 19:09+0200\n"
+"PO-Revision-Date: 2018-07-06 18:54+0200\n"
+"Last-Translator: Mattéo Rossillol--Laruelle <beatussum@protonmail.com>\n"
+"Language-Team: français <beatussum@protonmail.com>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: defragall:24
+#, sh-format
+msgid "usage: $NAME [-n] [-c <mode>] [-f] [-s <start>] [-l <len>] [-t <size>]"
+msgstr "usage: $NAME [-n] [-c <mode>] [-f] [-s <start>] [-l <len>] [-t <size>]"
+
+#: defragall:26
+msgid "    Defragment all mounted btrfs subvolumes."
+msgstr "    Défragmente tous les sous-volumes btrfs montés."
+
+#: defragall:28
+msgid "    -h                 : print this message"
+msgstr "    -h                 : affiche ce message"
+
+#: defragall:29
+msgid "    -v                 : print the program version"
+msgstr "    -v                 : affiche la version du programme"
+
+#: defragall:30
+msgid "    -n                 : not to be verbose"
+msgstr "    -n                 : affiche moins de détail"
+
+#: defragall:31
+msgid "    -c<zlib,lzo,zstd>  : compress the file while defragmenting"
+msgstr "    -c<zlib,lzo,zstd>  : compresse le fichier pendant la défragmentation"
+
+#: defragall:32
+msgid "    -f                 : flush data to disk immediately after defragmenting"
+msgstr "    -f                 : Nettoie les données du disque immédiatement après la défragmentation"
+
+#: defragall:33
+msgid "    -s <start>         : defragment only from byte onward"
+msgstr "    -s <start>         : défragmente uniquement à partir de l'octet suivant"
+
+#: defragall:34
+msgid "    -l <len>           : defragment only up to 'len' bytes"
+msgstr "    -l <len>           : défragmente seulement jusqu'à 'len' octets"
+
+#: defragall:35
+msgid "    -t <size>          : target extent 'size' hint"
+msgstr "    -t <size>          : étendue de la cible 'size' indice"
+
+#: defragall:37
+msgid "    see 'btrfs filesystem defragment --help' for more details"
+msgstr "    voir 'btrfs filesystem defragment --help' pour plus de dtails"
+
+#: defragall:41
+msgid "Getting the list of mounted subvolumes..."
+msgstr "Obtention de la liste des sous-volumes montés..."
+
+#: defragall:50
+msgid "Log:"
+msgstr "Fichier de rapport :"
+
+#: defragall:51
+msgid "Starting the defragmentation process..."
+msgstr "Démarrage du processus de défragmentation..."
+
+#: defragall:54
+msgid "Do you want to continue? [N/y]"
+msgstr "Voulez-vous continuer ? [N/o]"
+
+#: defragall:56
+msgid "Y"
+msgstr "O"
+
+#: defragall:56
+msgid "y"
+msgstr "o"
+
+#: defragall:64
+msgid "Defragmentation complete"
+msgstr "Défragmentation terminée"
+
+#: defragall:100
+msgid "is not a correct algorithm"
+msgstr "n'est pas un algorithme correct"
+
+#: defragall:123
+msgid "This operation must be executed with root rights"
+msgstr "Cette opration doit être excutée avec les droits root"
