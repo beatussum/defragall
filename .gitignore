@@ -1,2 +1,4 @@
+# Machine Object files
 *.mo
+# Portable Object Template file
 *.pot

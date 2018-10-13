@@ -26,8 +26,8 @@ print_help() {
   gettext "    Defragment all mounted btrfs subvolumes."; echo
   echo
   gettext "    -h                 : print this message"; echo
-  gettext "    -v                 : print the program version"; echo
-  gettext "    -n                 : not to be verbose"; echo
+  gettext "    -v                 : print the program's version"; echo
+  gettext "    -n                 : not be verbose"; echo
   gettext "    -c<zlib,lzo,zstd>  : compress the file while defragmenting"; echo
   gettext "    -f                 : flush data to disk immediately after defragmenting"; echo
   gettext "    -s <start>         : defragment only from byte onward"; echo
@@ -38,20 +38,17 @@ print_help() {
 }
 
 get_subvol() {
-  gettext "Getting the list of mounted subvolumes..."; echo
-  subvolumesid=`btrfs subvol list / | cut -d ' ' -f 2`
-  for i in $subvolumesid; do
-    subvolumespath=("$subvolumespath `mount | grep subvolid=$i | cut -d ' ' -f 3`")
-  done
+  echo -e $INFO_PREFIX $(gettext "Getting the list of mounted subvolumes...")
+  subvolumespath=(`mount | sed -e '/btrfs/!d' | cut -d ' ' -f 3`)
 }
 
 defragall() {
   local logfile="/var/log/${NAME}.log"
-  echo -e $INFO_PREFIX $(gettext "Log:") "$COLOR_NAME$logfile"
+  echo -e $INFO_PREFIX $(gettext "Log:") "${COLOR_NAME}$logfile"
   echo -e $INFO_PREFIX $(gettext "Starting the defragmentation process...")
 
   local qr
-  echo -e -n $COLOR_WARN$(gettext "Do you want to continue? [N/y]") "$COLOR_END"
+  echo -e -n $COLOR_WARN $(gettext "Do you want to continue? [N/y]") $COLOR_END
   read -n 1 qr; echo
   if [[ $qr == $(gettext "Y") || $qr == $(gettext "y") ]]; then
     date > $logfile
@@ -61,7 +58,7 @@ defragall() {
     done
     trap 'quit' 2 3
     wait
-    echo -e $INFO_PREFIX $(gettext "Defragmentation complete")
+    echo -e $INFO_PREFIX $(gettext "Defragmentation has been completed")
   fi
 }
 
@@ -97,7 +94,7 @@ while getopts 'hvc:nfs:l:t:' OPT; do
       elif [[ $OPTARG == 'zstd' ]]; then
         args="$args -czstd"
       else
-        echo -e "$ERROR_PREFIX $COLOR_NAME$OPTARG$COLOR_END" $(gettext "is not a correct algorithm")
+        echo -e "$ERROR_PREFIX ${COLOR_NAME}$OPTARG${COLOR_END}" $(gettext "is not a correct algorithm")
         exit 3
       fi
       ;;

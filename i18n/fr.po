@@ -3,12 +3,11 @@
 # This file is distributed under the GNU General Public License, version 3 or later.
 # Mattéo Rossillol--Laruelle <beatussum@protonmail.com>, 2018.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-06 19:09+0200\n"
+"POT-Creation-Date: 2018-10-13 22:03+0200\n"
 "PO-Revision-Date: 2018-07-06 18:54+0200\n"
 "Last-Translator: Mattéo Rossillol--Laruelle <beatussum@protonmail.com>\n"
 "Language-Team: français <beatussum@protonmail.com>\n"
@@ -31,11 +30,11 @@ msgid "    -h                 : print this message"
 msgstr "    -h                 : affiche ce message"
 
 #: defragall:29
-msgid "    -v                 : print the program version"
+msgid "    -v                 : print the program's version"
 msgstr "    -v                 : affiche la version du programme"
 
 #: defragall:30
-msgid "    -n                 : not to be verbose"
+msgid "    -n                 : not be verbose"
 msgstr "    -n                 : affiche moins de détail"
 
 #: defragall:31
@@ -60,40 +59,40 @@ msgstr "    -t <size>          : étendue de la cible 'size' indice"
 
 #: defragall:37
 msgid "    see 'btrfs filesystem defragment --help' for more details"
-msgstr "    voir 'btrfs filesystem defragment --help' pour plus de dtails"
+msgstr "    voir 'btrfs filesystem defragment --help' pour plus de détails"
 
 #: defragall:41
 msgid "Getting the list of mounted subvolumes..."
 msgstr "Obtention de la liste des sous-volumes montés..."
 
-#: defragall:50
+#: defragall:47
 msgid "Log:"
 msgstr "Fichier de rapport :"
 
-#: defragall:51
+#: defragall:48
 msgid "Starting the defragmentation process..."
 msgstr "Démarrage du processus de défragmentation..."
 
-#: defragall:54
+#: defragall:51
 msgid "Do you want to continue? [N/y]"
 msgstr "Voulez-vous continuer ? [N/o]"
 
-#: defragall:56
+#: defragall:53
 msgid "Y"
 msgstr "O"
 
-#: defragall:56
+#: defragall:53
 msgid "y"
 msgstr "o"
 
-#: defragall:64
-msgid "Defragmentation complete"
+#: defragall:61
+msgid "Defragmentation has been completed"
 msgstr "Défragmentation terminée"
 
-#: defragall:100
+#: defragall:97
 msgid "is not a correct algorithm"
 msgstr "n'est pas un algorithme correct"
 
-#: defragall:123
+#: defragall:120
 msgid "This operation must be executed with root rights"
 msgstr "Cette opration doit être excutée avec les droits root"
