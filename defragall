@@ -3,7 +3,7 @@
 
 source gettext.sh
 
-readonly VERSION=1.0
+readonly VERSION=1.2
 readonly NAME=`basename $0`
 
 export TEXTDOMAIN=$NAME
@@ -21,14 +21,14 @@ print_version() {
 }
 
 print_help() {
-  eval_gettext "usage: \$NAME [-n] [-c <mode>] [-f] [-s <start>] [-l <len>] [-t <size>]"; echo
+  eval_gettext "usage: \$NAME [-n] [-c <algh>] [-f] [-s <start>] [-l <len>] [-t <size>]"; echo
   echo
   gettext "    Defragment all mounted btrfs subvolumes."; echo
   echo
   gettext "    -h                 : print this message"; echo
   gettext "    -v                 : print the program's version"; echo
   gettext "    -n                 : not be verbose"; echo
-  gettext "    -c<zlib,lzo,zstd>  : compress the file while defragmenting"; echo
+  gettext "    -c <zlib,lzo,zstd> : compress the file while defragmenting"; echo
   gettext "    -f                 : flush data to disk immediately after defragmenting"; echo
   gettext "    -s <start>         : defragment only from byte onward"; echo
   gettext "    -l <len>           : defragment only up to 'len' bytes"; echo
@@ -87,12 +87,8 @@ while getopts 'hvc:nfs:l:t:' OPT; do
       args=`echo $args | sed 's/-v//'`
       ;;
     c)
-      if [[ $OPTARG == 'lzo' ]]; then
-        args="$args -clzo"
-      elif [[ $OPTARG == 'zlib' ]] || [ -z $OPTARG ]; then
-        args="$args -czlib"
-      elif [[ $OPTARG == 'zstd' ]]; then
-        args="$args -czstd"
+      if [[ $OPTARG == 'lzo' || $OPTARG == 'zstd' || $OPTARG == 'zlib' ]]; then
+        args=("$args -c${OPTARG}")
       else
         echo -e "$ERROR_PREFIX ${COLOR_NAME}$OPTARG${COLOR_END}" $(gettext "is not a correct algorithm")
         exit 3

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-10-13 22:03+0200\n"
+"POT-Creation-Date: 2018-10-14 20:23+0200\n"
 "PO-Revision-Date: 2018-07-06 18:54+0200\n"
 "Last-Translator: Mattéo Rossillol--Laruelle <beatussum@protonmail.com>\n"
 "Language-Team: français <beatussum@protonmail.com>\n"
@@ -18,8 +18,8 @@ msgstr ""
 
 #: defragall:24
 #, sh-format
-msgid "usage: $NAME [-n] [-c <mode>] [-f] [-s <start>] [-l <len>] [-t <size>]"
-msgstr "usage: $NAME [-n] [-c <mode>] [-f] [-s <start>] [-l <len>] [-t <size>]"
+msgid "usage: $NAME [-n] [-c <algh>] [-f] [-s <start>] [-l <len>] [-t <size>]"
+msgstr "usage: $NAME [-n] [-c <algh>] [-f] [-s <start>] [-l <len>] [-t <size>]"
 
 #: defragall:26
 msgid "    Defragment all mounted btrfs subvolumes."
@@ -38,16 +38,21 @@ msgid "    -n                 : not be verbose"
 msgstr "    -n                 : affiche moins de détail"
 
 #: defragall:31
-msgid "    -c<zlib,lzo,zstd>  : compress the file while defragmenting"
-msgstr "    -c<zlib,lzo,zstd>  : compresse le fichier pendant la défragmentation"
+msgid "    -c <zlib,lzo,zstd> : compress the file while defragmenting"
+msgstr ""
+"    -c <zlib,lzo,zstd> : compresse le fichier pendant la défragmentation"
 
 #: defragall:32
-msgid "    -f                 : flush data to disk immediately after defragmenting"
-msgstr "    -f                 : Nettoie les données du disque immédiatement après la défragmentation"
+msgid ""
+"    -f                 : flush data to disk immediately after defragmenting"
+msgstr ""
+"    -f                 : Nettoie les données du disque immédiatement après "
+"la défragmentation"
 
 #: defragall:33
 msgid "    -s <start>         : defragment only from byte onward"
-msgstr "    -s <start>         : défragmente uniquement à partir de l'octet suivant"
+msgstr ""
+"    -s <start>         : défragmente uniquement à partir de l'octet suivant"
 
 #: defragall:34
 msgid "    -l <len>           : defragment only up to 'len' bytes"
@@ -89,10 +94,10 @@ msgstr "o"
 msgid "Defragmentation has been completed"
 msgstr "Défragmentation terminée"
 
-#: defragall:97
+#: defragall:93
 msgid "is not a correct algorithm"
 msgstr "n'est pas un algorithme correct"
 
-#: defragall:120
+#: defragall:116
 msgid "This operation must be executed with root rights"
 msgstr "Cette opration doit être excutée avec les droits root"
