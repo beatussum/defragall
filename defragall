@@ -48,7 +48,7 @@ defragall() {
   echo -e $INFO_PREFIX $(gettext "Starting the defragmentation process...")
 
   local qr
-  echo -e -n $COLOR_WARN $(gettext "Do you want to continue? [N/y]") $COLOR_END
+  echo -e -n ${COLOR_WARN}$(gettext "Do you want to continue? [N/y]") $COLOR_END
   read -n 1 qr; echo
   if [[ $qr == $(gettext "Y") || $qr == $(gettext "y") ]]; then
     date > $logfile

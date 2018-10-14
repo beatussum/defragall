@@ -1,0 +1,4 @@
+[submodule "archlinux"]
+	path = archlinux
+	url = ssh://aur@aur.archlinux.org/defragall-git.git
+	branch = master
