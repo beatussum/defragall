@@ -34,6 +34,10 @@ install: all
 	@if [ ! -e $(INSTALL_ROOT)/usr/bin/defragall ]; then \
 		install -Dm755 defragall $(INSTALL_ROOT)/usr/bin/defragall; \
 	fi
+	@echo 'Installing the completion files...'
+	@if [ ! -e $(INSTALL_ROOT)/usr/share/zsh/site-functions/_defragall ]; then \
+		install -Dm644 completions/zsh $(INSTALL_ROOT)/usr/share/zsh/site-functions/_defragall; \
+	fi
 .PHONY: install
 
 uninstall:
@@ -46,6 +50,10 @@ uninstall:
 	@echo 'Uninstalling the executable file...'
 	@if [ -e $(INSTALL_ROOT)/usr/bin/defragall ]; then \
 		rm $(INSTALL_ROOT)/usr/bin/defragall; \
+	fi
+	@echo 'Uninstalling the completion files...'
+	@if [ -e $(INSTALL_ROOT)/usr/share/zsh/site-functions/_defragall ]; then \
+		rm $(INSTALL_ROOT)/usr/share/zsh/site-functions/_defragall; \
 	fi
 .PHONY: uninstall
 

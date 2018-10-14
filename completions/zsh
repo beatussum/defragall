@@ -1,0 +1,10 @@
+#compdef defragall
+
+_arguments '-h[print usage]::' \
+  "-v[print the program's version]::" \
+  '-n[not be verbose]' \
+  '-c[compress the file while defragmenting]:compression algorithm:(lzo zlib zstd)' \
+  '-f[flush data to disk immediately after defragmenting]' \
+  '-s[defragment only from byte onward]:byte position:' \
+  "-l[defragment only up to 'len' bytes]:length (bytes):" \
+  "-t[target extent 'size' hint]:minimum size (bytes):"
